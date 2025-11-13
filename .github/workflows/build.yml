@@ -69,7 +69,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: kivy-apk
-          path: bin/*.apk    - name: Install Linux dependencies
+          path: bin/*.apk   
+      
+    - name: Install Linux dependencies
       if: runner.os == 'Linux'
       # Required by some p4a recipes, but not
       # installed by p4a on Linux.
