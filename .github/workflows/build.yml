@@ -36,7 +36,7 @@ jobs:
 
       # Step 5: Build with Buildozer
       - name: Build with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1.2
+        uses: alfred82santa/buildozer-action@v1
         id: buildozer
         with:
           command: buildozer android debug
