@@ -8,43 +8,37 @@ on:
             runs-on: ubuntu-20.04
 
                 steps:
-                      # Checkout repository
-                            - name: Checkout repository
-                                    uses: actions/checkout@v2
+                      - name: Checkout repository
+                              uses: actions/checkout@v2
 
-                                          # Get current date
-                                                - name: Get Date
-                                                        id: get-date
-                                                                run: |
-                                                                          echo "date=$(date -u '+%Y%m%d')" >> $GITHUB_OUTPUT
-                                                                                  shell: bash
+                                    - name: Get Date
+                                            id: get-date
+                                                    run: |
+                                                              echo "date=$(date -u '+%Y%m%d')" >> $GITHUB_OUTPUT
+                                                                      shell: bash
 
-                                                                                        # Cache Buildozer global directory
-                                                                                              - name: Cache Buildozer global directory
-                                                                                                      uses: actions/cache@v2
-                                                                                                              with:
-                                                                                                                        path: .buildozer_global
-                                                                                                                                  key: buildozer-global-${{ hashFiles('buildozer.spec') }}
+                                                                            - name: Cache Buildozer global directory
+                                                                                    uses: actions/cache@v2
+                                                                                            with:
+                                                                                                      path: .buildozer_global
+                                                                                                                key: buildozer-global-${{ hashFiles('buildozer.spec') }}
 
-                                                                                                                                        # Cache Buildozer build directory
-                                                                                                                                              - name: Cache Buildozer build directory
-                                                                                                                                                      uses: actions/cache@v2
-                                                                                                                                                              with:
-                                                                                                                                                                        path: .buildozer
-                                                                                                                                                                                  key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
+                                                                                                                      - name: Cache Buildozer build directory
+                                                                                                                              uses: actions/cache@v2
+                                                                                                                                      with:
+                                                                                                                                                path: .buildozer
+                                                                                                                                                          key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
 
-                                                                                                                                                                                        # Build with Buildozer
-                                                                                                                                                                                              - name: Build with Buildozer
-                                                                                                                                                                                                      uses: ArtemSBulgakov/buildozer-action@v1
-                                                                                                                                                                                                              id: buildozer
-                                                                                                                                                                                                                      with:
-                                                                                                                                                                                                                                command: buildozer android debug
-                                                                                                                                                                                                                                          buildozer_version: stable
+                                                                                                                                                                - name: Build with Buildozer
+                                                                                                                                                                        uses: ArtemSBulgakov/buildozer-action@v1
+                                                                                                                                                                                id: buildozer
+                                                                                                                                                                                        with:
+                                                                                                                                                                                                  command: buildozer android debug
+                                                                                                                                                                                                            buildozer_version: stable
 
-                                                                                                                                                                                                                                                # Upload artifacts
-                                                                                                                                                                                                                                                      - name: Upload artifacts
-                                                                                                                                                                                                                                                              uses: actions/upload-artifact@v2
-                                                                                                                                                                                                                                                                      with:
-                                                                                                                                                                                                                                                                                name: package
-                                                                                                                                                                                                                                                                                          path: ${{ steps.buildozer.outputs.filename }}
-                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                  - name: Upload artifacts
+                                                                                                                                                                                                                          uses: actions/upload-artifact@v2
+                                                                                                                                                                                                                                  with:
+                                                                                                                                                                                                                                            name: package
+                                                                                                                                                                                                                                                      path: ${{ steps.buildozer.outputs.filename }}
+                                                                                                                                                                                                                                                      
